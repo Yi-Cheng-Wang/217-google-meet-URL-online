@@ -1,0 +1,229 @@
+<html>
+	<head>
+		<title>自動課表2.2</title>
+		<meta  charset="utf-8">
+		<style>
+			#letItCrazy{
+				border:3px solid black;
+			}
+		</style>
+		<script>
+			var cra=-1,d0,d1,d2,d3,d4,d5,whichclass=-1,whichclass1=-1,whichclass2=-1,count1=1,reSet=1;
+			var changeTo=["a","b","c","d","e"];
+			RightNow = new Date();
+			window.onload = function started(){
+				setInterval(getData,1000);
+				setInterval(timeColorful,1000);
+				setInterval(changeOrNot,200);
+				//setInterval(getD,10000);
+			}
+			function getData(){
+				RightNow = new Date();
+				d0=RightNow.getMonth();
+				d1=RightNow.getDate();
+				d2=RightNow.getDay();
+				d3=RightNow.getHours();
+				d4=RightNow.getMinutes();
+				d5=RightNow.getSeconds();
+				document.getElementById("clock").innerHTML=(d0+1)+"月"+d1+"號 星期"+d2+"　　"+d3+"點 "+d4+"分 "+d5+"秒 ";
+			}
+			function getInRoom(A){
+				open("https://meet.google.com/"+A.innerHTML);
+			}
+			function getInRoom2(A){
+				roomcode=A.id+"-code";
+				B=document.getElementById(roomcode);
+				getInRoom(B);
+			}
+			function timeColorful(){
+				if(d2==5){
+					if(d3==8){
+						whichclass=document.getElementById(changeTo[d2-1]+"-a");
+					}else if(d3==9){
+						whichclass=document.getElementById(changeTo[d2-1]+"-b");
+					}else if(d3==10){
+						whichclass=document.getElementById(changeTo[d2-1]+"-c");
+					}else if(d3==11){
+						whichclass=document.getElementById(changeTo[d2-1]+"-d");
+					}else if(d3==12){
+						whichclass=-1;
+					}else if(d3==13&&b4<5){
+						whichclass=-1;
+					}else if(d3==13){
+						whichclass=document.getElementById(changeTo[d2-1]+"-e");
+					}else if(d3==14&&d4<5){
+						whichclass=document.getElementById(changeTo[d2-1]+"-e");
+					}else if(d3==14&&d4<15){
+						whichclass=-1;
+					}else if(d3==14){
+						whichclass=document.getElementById(changeTo[d2-1]+"-f");
+					}else if(d3==15&&d4<15){
+						whichclass=document.getElementById(changeTo[d2-1]+"-f");
+					}else if(d3==15){
+						whichclass=document.getElementById(changeTo[d2-1]+"-g");
+					}else if(d3==16&&d4<15){
+						whichclass=document.getElementById(changeTo[d2-1]+"-g");
+					}else if(d3==16){
+						whichclass=document.getElementById(changeTo[d2-1]+"-h");
+					}else if(d3==17&&d4<15){
+						whichclass=document.getElementById(changeTo[d2-1]+"-h");
+					}else{
+						whichclass=-1;
+					}
+				}else if(d2<5){
+					if(d3==8){
+						whichclass=document.getElementById(changeTo[d2-1]+"-a");
+					}else if(d3==9){
+						whichclass=document.getElementById(changeTo[d2-1]+"-b");
+					}else if(d3==10){
+						whichclass=document.getElementById(changeTo[d2-1]+"-c");
+					}else if(d3==11){
+						whichclass=document.getElementById(changeTo[d2-1]+"-d");
+					}else if(d3==12){
+						whichclass=-1;
+					}else if(d3==13&&d4<5){
+						whichclass=-1;
+					}else if(d3==13){
+						whichclass=document.getElementById(changeTo[d2-1]+"-e");
+					}else if(d3==14&&d4<5){
+						whichclass=document.getElementById(changeTo[d2-1]+"-e");
+					}else if(d3==14){
+						whichclass=document.getElementById(changeTo[d2-1]+"-f");
+					}else if(d3==15&&d4<5){
+						whichclass=document.getElementById(changeTo[d2-1]+"-f");
+					}else if(d3==15&&d4<15){
+						whichclass=-1;
+					}else if(d3==15){
+						whichclass=document.getElementById(changeTo[d2-1]+"-g");
+					}else if(d3==16&&d4<15){
+						whichclass=document.getElementById(changeTo[b2-1]+"-g");
+					}else if(d3==16){
+						whichclass=document.getElementById(changeTo[d2-1]+"-h");
+					}else if(d3==17&&d4<15){
+						whichclass=document.getElementById(changeTo[d2-1]+"-h");
+					}else{
+						whichclass=-1;
+					}
+				}
+				whichclass.style.background="#FF00FF";
+			}
+			function crazy(B){
+				if(cra<0){
+					B.innerHTML="取消自動";
+					cra=1;
+					t1=setInterval(be,1000);
+				}else{
+					B.innerHTML="開啟自動";
+					cra=-1;
+					clearInterval(t1);
+				}
+			}
+			function changeOrNot(){
+				if(count1==1){
+					whichclass1=whichclass;
+					count1=count1+1;
+				}else if(count1==2){
+					whichclass2=whichclass;
+					count1=count1-1;
+				}
+				if(whichclass1!=whichclass2){
+					reSet=1;
+					if(count1==1){
+						whichclass1.style.background="none";
+					}else if(count1==2){
+						whichclass2.style.background="none";
+					}
+				}
+			}
+			function be(){
+				if(whichclass==-1)return 0;
+				if(reSet==1){
+					getInRoom2(whichclass);
+					reSet=-1;
+				}
+			}
+			function getD(){
+				d3=d3+1;
+				console.log(d2,d3);
+				//天數測資輸入點
+			}
+		</script>
+	</head>
+	<body>
+			<table border="1" cellpadding="40" cellspacing="0">
+				<tr>
+					<td><div id="letItCrazy" onclick="crazy(this);">開啟自動</div></td>
+					<td>星期一</td>
+					<td>星期二</td>
+					<td>星期三</td>
+					<td>星期四</td>
+					<td>星期五</td>
+				</tr>
+				<tr>
+					<td>第一節</td>
+					<td id="a-a" onclick="getInRoom2(this);">生物<div id="a-a-code" onclick="getInRoom(this);">fdp-usan-rwi</div></td>
+					<td id="b-a" onclick="getInRoom2(this);">數學<div id="b-a-code" onclick="getInRoom(this);">sfz-vwhc-chz</div></td>
+					<td id="c-a" onclick="getInRoom2(this);">體育<div id="c-a-code" onclick="getInRoom(this);">gpj-ubms-zcy</div></td>
+					<td id="d-a" onclick="getInRoom2(this);">物理<div id="d-a-code" onclick="getInRoom(this);">aab-jefj-hqi</div></td>
+					<td id="e-a" onclick="getInRoom2(this);">數學<div id="e-a-code" onclick="getInRoom(this);">sfz-vwhc-chz</div></td>
+				</tr>
+				<tr>
+					<td>第二節</td>
+					<td id="a-b" onclick="getInRoom2(this);">生物<div id="a-b-code" onclick="getInRoom(this);">fdp-usan-rwi</div></td>
+					<td id="b-b" onclick="getInRoom2(this);">英文<div id="b-b-code" onclick="getInRoom(this);">rkd-tamc-wjc</div></td>
+					<td id="c-b" onclick="getInRoom2(this);">英文<div id="c-b-code" onclick="getInRoom(this);">rkd-tamc-wjc</div></td>
+					<td id="d-b" onclick="getInRoom2(this);">物理<div id="d-b-code" onclick="getInRoom(this);">aab-jefj-hqi</div></td>
+					<td id="e-b" onclick="getInRoom2(this);">國文<div id="e-b-code" onclick="getInRoom(this);"></div></td>
+				</tr>
+				<tr>
+					<td>第三節</td>
+					<td id="a-c" onclick="getInRoom2(this);">校訂<div id="a-c-code" onclick="getInRoom(this);">djw-rzne-ise</div></td>
+					<td id="b-c" onclick="getInRoom2(this);">地理<div id="b-c-code" onclick="getInRoom(this);">ojd-gyyx-yem</div></td>
+					<td id="c-c" onclick="getInRoom2(this);">探A<div id="c-c-code" onclick="getInRoom(this);">nag-ozzr-hrg</div></td>
+					<td id="d-c" onclick="getInRoom2(this);">自主<div id="d-c-code" onclick="getInRoom(this);">sfz-vwhc-chz</div></td>
+					<td id="e-c" onclick="getInRoom2(this);">體育<div id="e-c-code" onclick="getInRoom(this);">gpj-ubms-zcy</div></td>
+				</tr>
+				<tr>
+					<td>第四節</td>
+					<td id="a-d" onclick="getInRoom2(this);">校訂<div id="a-d-code" onclick="getInRoom(this);">djw-rzne-ise</div></td>
+					<td id="b-d" onclick="getInRoom2(this);">國文<div id="b-d-code" onclick="getInRoom(this);"></div></td>
+					<td id="c-d" onclick="getInRoom2(this);">探A<div id="c-d-code" onclick="getInRoom(this);">nag-ozzr-hrg</div></td>
+					<td id="d-d" onclick="getInRoom2(this);">英選<div id="d-d-code" onclick="getInRoom(this);">ykx-grts-fme</div></td>
+					<td id="e-d" onclick="getInRoom2(this);">英文<div id="e-d-code" onclick="getInRoom(this);">rkd-tamc-wjc</div></td>
+				</tr>
+				<tr>
+					<td>第五節</td>
+					<td id="a-e" onclick="getInRoom2(this);">地理<div id="a-e-code" onclick="getInRoom(this);">ojd-gyyx-yem</div></td>
+					<td id="b-e" onclick="getInRoom2(this);">音樂<div id="b-e-code" onclick="getInRoom(this);">bon-xeep-dvx</div></td>
+					<td id="c-e" onclick="getInRoom2(this);">化學<div id="c-e-code" onclick="getInRoom(this);">jva-mbmc-kko</div></td>
+					<td id="d-e" onclick="getInRoom2(this);">英文<div id="d-e-code" onclick="getInRoom(this);">rkd-tamc-wjc</div></td>
+					<td id="e-e" onclick="getInRoom2(this);">班會<div id="e-e-code" onclick="getInRoom(this);">sfz-vwhc-chz</div></td>
+				</tr>
+				<tr>
+					<td>第六節</td>
+					<td id="a-f" onclick="getInRoom2(this);">美術<div id="a-f-code" onclick="getInRoom(this);">hvo-amnp-obu</div></td>
+					<td id="b-f" onclick="getInRoom2(this);">家政<div id="b-f-code" onclick="getInRoom(this);">hfs-ixyz-dkz</div></td>
+					<td id="c-f" onclick="getInRoom2(this);">化學<div id="c-f-code" onclick="getInRoom(this);">jva-mbmc-kko</div></td>
+					<td id="d-f" onclick="getInRoom2(this);">國文<div id="d-f-code" onclick="getInRoom(this);"></div></td>
+					<td id="e-f" onclick="getInRoom2(this);">社團<div id="e-f-code" onclick="getInRoom(this);"></div></td>
+				</tr>
+				<tr>
+					<td>第七節</td>
+					<td id="a-g" onclick="getInRoom2(this);">數學<div id="a-g-code" onclick="getInRoom(this);">sfz-vwhc-chz</div></td>
+					<td id="b-g" onclick="getInRoom2(this);">家政<div id="b-g-code" onclick="getInRoom(this);">hfs-ixyz-dkz</div></td>
+					<td id="c-g" onclick="getInRoom2(this);">國文<div id="c-g-code" onclick="getInRoom(this);"></div></td>
+					<td id="d-g" onclick="getInRoom2(this);">數學<div id="d-g-code" onclick="getInRoom(this);">sfz-vwhc-chz</div></td>
+					<td id="e-g" onclick="getInRoom2(this);">社團<div id="e-g-code" onclick="getInRoom(this);"></div></td>
+				<tr>
+					<td>第八節</td>
+					<td id="a-h" onclick="getInRoom2(this);">化學<div id="a-h-code" onclick="getInRoom(this);">jva-mbmc-kko</div></td>
+					<td id="b-h" onclick="getInRoom2(this);">生物<div id="b-h-code" onclick="getInRoom(this);">fdp-usan-rwi</div></td>
+					<td id="c-h" onclick="getInRoom2(this);">物理<div id="c-h-code" onclick="getInRoom(this);">aab-jefj-hqi</div></td>
+					<td id="d-h" onclick="getInRoom2(this);"><div id="d-h-code" onclick="getInRoom(this);"></div></td>
+					<td id="e-h" onclick="getInRoom2(this);"><div id="e-h-code" onclick="getInRoom(this);"></div></td>
+				</tr>
+				</tr>
+			</table>
+			<div id="clock"></div>
+	</body>
+</html>
